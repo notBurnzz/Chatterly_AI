@@ -1,0 +1,131 @@
+.Navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  /* Slightly brighter translucent background for better logo visibility */
+  background-color: rgba(32, 44, 57, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 20px;
+  color: #ecf0f1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.NavbarContent {
+  /* Use flex for centering the brand, with a relative for RightSection if needed */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; 
+  height: 100%;
+}
+
+/* LeftSection is optional if you want a separate container for the brand */
+.LeftSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain; /* keep aspect ratio for the logo */
+  transition: transform 0.3s;
+}
+
+.Logo:hover {
+  transform: scale(1.1);
+}
+
+.Title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #ffffff; /* Ensures the text is bright over the dark background */
+  margin: 0;
+}
+
+.RightSection {
+  position: absolute;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Model Selector */
+.ModelSelect {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.ModelSelect:hover,
+.ModelSelect:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Features Dropdown */
+.FeaturesDropdown {
+  position: relative;
+}
+
+.FeaturesButton {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.FeaturesButton:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.FeaturesList {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: rgba(32, 44, 57, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.FeaturesList li {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.FeaturesList li:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Dark Mode Support (Optional) */
+body.dark-mode .Navbar {
+  background-color: rgba(32, 44, 57, 0.9);
+}
+
+body.dark-mode .FeaturesList {
+  background-color: rgba(32, 44, 57, 1);
+}
