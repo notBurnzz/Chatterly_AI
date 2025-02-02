@@ -1,31 +1,30 @@
+/* Navbar Container */
 .Navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 70px;
-  /* Slightly brighter translucent background for better logo visibility */
   background-color: rgba(32, 44, 57, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
-  z-index: 1000;
+  z-index: 1000; /* Ensure it stays above Sidebar */
   padding: 0 20px;
-  color: #ecf0f1;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  color: #ecf0f1;
 }
 
+
+/* Navbar Content */
 .NavbarContent {
-  /* Use flex for centering the brand, with a relative for RightSection if needed */
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  position: relative; 
-  height: 100%;
 }
 
-/* LeftSection is optional if you want a separate container for the brand */
+/* Left Section (Logo and Title) */
 .LeftSection {
   display: flex;
   align-items: center;
@@ -35,24 +34,25 @@
 .Logo {
   width: 40px;
   height: 40px;
-  object-fit: contain; /* keep aspect ratio for the logo */
-  transition: transform 0.3s;
+  object-fit: contain; /* Keep aspect ratio */
+  border-radius: 50%; /* Optional: for circular logo */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
 }
 
 .Logo:hover {
   transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.4); /* Subtle glow effect */
 }
 
 .Title {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #ffffff; /* Ensures the text is bright over the dark background */
+  color: #ffffff; /* Bright white for dark background */
   margin: 0;
 }
 
+/* Right Section (Dropdown and Features) */
 .RightSection {
-  position: absolute;
-  right: 20px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -60,11 +60,11 @@
 
 /* Model Selector */
 .ModelSelect {
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-size: 14px;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.6);
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent */
   color: #ffffff;
   outline: none;
   cursor: pointer;
@@ -73,7 +73,7 @@
 
 .ModelSelect:hover,
 .ModelSelect:focus {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.25); /* Lighter on hover */
   border-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -86,44 +86,80 @@
   padding: 8px 16px;
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.15); /* Matches dropdown button */
   color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 .FeaturesButton:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.25); /* Subtle highlight */
   border-color: rgba(255, 255, 255, 0.8);
 }
 
+/* Dropdown Menu */
 .FeaturesList {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 8px); /* Below the button */
   right: 0;
-  background-color: rgba(32, 44, 57, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
+  background-color: rgba(32, 44, 57, 0.95); /* Matches Navbar background */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+  border-radius: 8px;
   list-style: none;
   padding: 10px 0;
   margin: 0;
-  min-width: 120px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  min-width: 140px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Dropdown shadow */
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+.FeaturesDropdown:hover .FeaturesList {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown List Items */
 .FeaturesList li {
-  padding: 8px 16px;
-  cursor: pointer;
+  padding: 10px 14px;
   color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .FeaturesList li:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #34495e; /* Subtle highlight */
+  color: #ecf0f1; /* Slightly brighter text */
 }
 
-/* Dark Mode Support (Optional) */
+/* Scrollbar Styling (For Dropdown) */
+.FeaturesList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.FeaturesList::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.FeaturesList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Dark Mode Support */
 body.dark-mode .Navbar {
   background-color: rgba(32, 44, 57, 0.9);
+}
+
+body.dark-mode .ModelSelect,
+body.dark-mode .FeaturesButton {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 body.dark-mode .FeaturesList {

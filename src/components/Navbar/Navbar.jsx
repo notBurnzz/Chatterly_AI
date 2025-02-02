@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Navbar.module.css";
 
 export function Navbar({ selectedModel, setSelectedModel }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   // Toggle between light and dark mode
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
-  // Sync with localStorage
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsFeaturesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Sync theme with localStorage
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add("dark-mode");
@@ -21,7 +35,7 @@ export function Navbar({ selectedModel, setSelectedModel }) {
     }
   }, [isDarkMode]);
 
-  // Load theme from localStorage
+  // Load theme from localStorage on component mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -32,7 +46,7 @@ export function Navbar({ selectedModel, setSelectedModel }) {
   return (
     <header className={styles.Navbar}>
       <div className={styles.NavbarContent}>
-        {/* Logo + Title in center */}
+        {/* Logo + Title */}
         <div className={styles.LeftSection}>
           <img
             className={styles.Logo}
@@ -42,8 +56,9 @@ export function Navbar({ selectedModel, setSelectedModel }) {
           <h2 className={styles.Title}>Chatterly AI</h2>
         </div>
 
-        {/* Model & Features on the right */}
+        {/* Right Section: Model Selection + Features */}
         <div className={styles.RightSection}>
+          {/* AI Model Selector */}
           <select
             className={styles.ModelSelect}
             value={selectedModel}
@@ -52,9 +67,11 @@ export function Navbar({ selectedModel, setSelectedModel }) {
             <option value="googleai">Google AI</option>
             <option value="openai">OpenAI</option>
             <option value="deepseekai">DeepSeek AI</option>
+            <option value="qwenai">Qwen AI</option>
           </select>
 
-          <div className={styles.FeaturesDropdown}>
+          {/* Features Dropdown */}
+          <div className={styles.FeaturesDropdown} ref={dropdownRef}>
             <button
               className={styles.FeaturesButton}
               onClick={() => setIsFeaturesOpen((prev) => !prev)}
@@ -65,6 +82,12 @@ export function Navbar({ selectedModel, setSelectedModel }) {
               <ul className={styles.FeaturesList}>
                 <li onClick={toggleTheme}>
                   {isDarkMode ? "Light Mode" : "Dark Mode"}
+                </li>
+                <li onClick={() => alert("Feature 1 clicked!")}>
+                  Other Feature 1
+                </li>
+                <li onClick={() => alert("Feature 2 clicked!")}>
+                  Other Feature 2
                 </li>
               </ul>
             )}

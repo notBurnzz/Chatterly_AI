@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Sidebar.module.css";
-import { signInWithGoogle, logout, auth } from "../../firebase"; // Import Firebase authentication
+import { signInWithGoogle, logout, auth } from "../../firebase";
 
 export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  // Listen for Firebase Auth state changes to update user info
+  // Listen for Firebase Auth state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -15,14 +16,6 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
 
   // Toggle sidebar expansion
   const toggleSidebar = () => setIsExpanded((prev) => !prev);
-
-  // Handle Chat Selection
-  const handleChatSelection = (chatId) => {
-    const selectedChat = messages.find((msg) => msg.id === chatId);
-    if (selectedChat) {
-      setMessages([selectedChat]);
-    }
-  };
 
   // Handle Google Login
   const handleLogin = async () => {
@@ -47,7 +40,9 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
 
   return (
     <div
-      className={`${styles.Sidebar} ${isExpanded ? styles.Expanded : styles.Collapsed}`}
+      className={`${styles.Sidebar} ${
+        isExpanded ? styles.Expanded : styles.Collapsed
+      }`}
       onMouseEnter={toggleSidebar}
       onMouseLeave={toggleSidebar}
     >
@@ -62,7 +57,7 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
               <li
                 key={chat.id}
                 className={styles.ChatItem}
-                onClick={() => handleChatSelection(chat.id)}
+                onClick={() => setMessages([chat])}
               >
                 <span className={styles.ModelName}>{chat.model}</span>
                 <span className={styles.Timestamp}>
@@ -74,19 +69,32 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
         )}
       </div>
 
-      {/* 🔹 User Section at Bottom */}
+      {/* 🔹 User Section */}
       <div className={styles.BottomSection}>
         {user ? (
-          <div className={styles.UserInfo}>
+          <div
+            className={styles.UserInfo}
+            onMouseEnter={() => setIsDropdownVisible(true)}
+            onMouseLeave={() => setIsDropdownVisible(false)}
+          >
             <img
               className={styles.UserAvatar}
               src={user.photoURL || "/default-avatar.png"}
               alt="User Avatar"
             />
             {isExpanded && <span className={styles.UserEmail}>{user.email}</span>}
-            <button className={styles.AuthButton} onClick={handleLogout}>
-              Logout
-            </button>
+
+            {/* Dropdown for Logout */}
+            {isDropdownVisible && (
+              <div className={styles.Dropdown}>
+                <button
+                  className={styles.DropdownButton}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <button className={styles.AuthButton} onClick={handleLogin}>

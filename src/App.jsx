@@ -28,7 +28,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [selectedModel, setSelectedModel] = useState("googleai");
-  const [user, setUser] = useState(null); // Current user state
+  const [user, setUser] = useState(null);
 
   // Initialize assistants
   const assistants = {
@@ -37,7 +37,7 @@ function App() {
     deepseekai: new DeepSeekAIAssistant(),
   };
 
-  // Listen for auth changes, load chat history if user is logged in
+  // Listen for auth changes and load chat history
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -68,11 +68,10 @@ function App() {
       setMessages(chats);
     } catch (error) {
       console.error("Error loading chat history:", error);
-      alert("Failed to load chat history. Please create the required Firestore index.");
     }
   };
 
-  // Save a message to Firebase (only if user is logged in)
+  // Save a message to Firebase
   const saveMessageToFirebase = async (message) => {
     if (!user) return;
     try {
@@ -84,11 +83,10 @@ function App() {
       });
     } catch (error) {
       console.error("Error saving message:", error);
-      alert("Failed to save the message.");
     }
   };
 
-  // Handle sending user content and AI response
+  // Handle user message sending
   const handleContentSend = async (content) => {
     const userMessage = { content, role: "user", model: selectedModel };
     setMessages((prev) => [...prev, userMessage]);
@@ -118,7 +116,6 @@ function App() {
       }
     } catch (error) {
       console.error("Error during AI response:", error);
-      alert("Failed to process the chat.");
     } finally {
       setIsLoading(false);
       setIsStreaming(false);

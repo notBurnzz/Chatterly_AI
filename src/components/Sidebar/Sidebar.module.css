@@ -1,20 +1,21 @@
+/* Sidebar Container */
 .Sidebar {
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 0;
+  top: 70px; /* Align with Navbar */
   left: 0;
-  height: 100%;
-  width: 60px; /* Collapsed width */
+  height: calc(100% - 70px); /* Full height minus Navbar */
+  width: 80px; /* Collapsed width */
   background-color: #2c3e50; /* Main sidebar color */
   transition: width 0.3s ease-in-out;
   color: white;
-  z-index: 200;
-  overflow: hidden; /* Hide overflow when collapsed */
+  z-index: 200; /* Ensure Sidebar is below Navbar */
+  overflow: hidden; /* Hide overflow in collapsed mode */
 }
 
 .Sidebar.Expanded {
-  width: 240px; /* Expanded width */
+  width: 300px; /* Adjusted width for expanded state */
 }
 
 /* Top Section: Chat History */
@@ -35,53 +36,22 @@
   color: #bdc3c7;
 }
 
-/* Chat List */
-.ChatList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.ChatItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  margin-bottom: 5px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.ChatItem:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.ModelName {
-  font-weight: bold;
-}
-
-.Timestamp {
-  font-size: 12px;
-  color: #bdc3c7;
-}
-
-/* Bottom Section: User Info & Auth Buttons */
+/* Bottom Section: User Info & Dropdown */
 .BottomSection {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 255, 255, 0.06); /* Slightly different shade */
 }
 
 .UserInfo {
+  position: relative; /* Needed for Dropdown positioning */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  align-items: center; /* Align logo and email horizontally */
+  gap: 10px;
+  cursor: pointer;
 }
 
 .UserAvatar {
@@ -95,12 +65,40 @@
 .UserEmail {
   font-size: 14px;
   color: #ecf0f1;
-  text-align: center;
+  text-align: left;
   line-height: 1.2;
 }
 
+/* Dropdown Menu */
+.DropdownMenu {
+  position: absolute;
+  bottom: 70px; /* Position above the avatar */
+  left: 50%; /* Center align */
+  transform: translateX(-50%);
+  background-color: #34495e;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 300; /* Ensure it appears above other elements */
+}
+
+.DropdownButton {
+  background-color: #e74c3c;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.DropdownButton:hover {
+  background-color: #c0392b;
+}
+
+/* Auth Button (for Login) */
 .AuthButton {
-  margin-top: 8px;
+  margin-top: auto; /* Push button to the bottom */
   background-color: #2980b9;
   color: #ffffff;
   border: none;
@@ -115,29 +113,18 @@
   background-color: #1c5980;
 }
 
-/* Hide text and timestamps in Collapsed state */
-.Sidebar.Collapsed .SidebarTitle,
-.Sidebar.Collapsed .EmptyMessage,
-.Sidebar.Collapsed .UserEmail,
-.Sidebar.Collapsed .ChatItem span:not(.UserAvatar) {
-  display: none;
-}
+/* Responsive Sidebar */
+@media (max-width: 768px) {
+  .Sidebar {
+    width: 80px;
+  }
 
-/* Center the avatar in collapsed mode */
-.Sidebar.Collapsed .UserAvatar {
-  margin: auto;
-}
+  .Sidebar.Expanded {
+    width: 250px; /* Adjusted for smaller screens */
+  }
 
-/* Scrollbar Styling for the TopSection */
-.TopSection::-webkit-scrollbar {
-  width: 8px;
-}
-
-.TopSection::-webkit-scrollbar-thumb {
-  background: #34495e;
-  border-radius: 4px;
-}
-
-.TopSection::-webkit-scrollbar-thumb:hover {
-  background: #5c5c5c;
+  .UserAvatar {
+    width: 40px;
+    height: 40px;
+  }
 }

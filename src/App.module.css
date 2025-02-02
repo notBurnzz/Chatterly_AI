@@ -5,33 +5,35 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: #2c3e50; /* Matches the sidebar and chat area */
+  background: radial-gradient(circle at top, #1a1a1a, #3b005f); /* Dark black to purple gradient */
   color: #ffffff;
   font-family: 'Inter', sans-serif;
 }
 
+/* Main Content Container */
 .MainContainer {
   display: flex;
-  margin-top: 70px; /* Same as Navbar height */
-  height: calc(100vh - 70px); /* Fills remaining height */
-  width: 100%; /* Fills full width */
+  margin-top: 70px; /* Push content below the navbar */
+  height: calc(100vh - 70px); /* Fill remaining height after the navbar */
+  width: 100%; /* Full width */
   overflow: hidden;
 }
 
 /* Sidebar */
 .ChatSidebar {
   width: 20%; /* Fixed sidebar width */
-  background-color: #2c3e50;
+  background: linear-gradient(180deg, #2a2a2a, #3b005f); /* Dark black to purple gradient */
   color: white;
   overflow-y: auto;
+  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.6); /* Inner shadow for depth */
 }
 
 .ChatSidebar h2 {
   padding: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
-  background-color: #2c3e50;
-  border-bottom: 1px solid #1f1f1f;
+  color: #e0c1ff; /* Light purple text */
+  text-shadow: 0px 0px 10px rgba(128, 0, 255, 0.5); /* Glowing text effect */
 }
 
 .ChatSidebar ul {
@@ -42,11 +44,12 @@
 .ChatSidebar li {
   padding: 0.8rem 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .ChatSidebar li:hover {
-  background-color: #3b4a5a;
+  background-color: #4b0082; /* Deep purple */
+  transform: scale(1.05); /* Slight zoom effect */
 }
 
 /* Navbar */
@@ -54,16 +57,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
+  position: fixed; /* Fixes the navbar at the top */
   top: 0;
   left: 0;
   right: 0;
   height: 70px; /* Fixed navbar height */
-  background-color: rgba(44, 62, 80, 0.8); /* Translucent effect */
-  backdrop-filter: blur(10px); /* Optional: adds blur effect */
-  z-index: 100;
+  background: linear-gradient(to right, #3b005f, #1a1a1a); /* Purple to dark black gradient */
+  z-index: 1000; /* Stays above all other elements */
   color: white;
   padding: 0 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Shadow for separation */
 }
 
 .Navbar .Logo {
@@ -71,13 +74,14 @@
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+  box-shadow: 0 0 10px #9a4dff; /* Glow effect around the logo */
 }
 
 .Navbar .Title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  text-align: center;
-  flex: 1;
+  color: #ffffff;
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* Glowing text effect */
 }
 
 .Navbar .RightSection {
@@ -86,35 +90,66 @@
   gap: 1rem;
 }
 
-/* Scrollbar Styling */
-.MainContainer::-webkit-scrollbar {
+/* Chat Area */
+.ChatContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0d0d0d; /* Plain black for chat area */
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 1rem; /* Inner padding for content */
+  margin-top: 70px; /* Push chat area below the navbar */
+  color: #ffffff;
+}
+
+.ChatContainer::-webkit-scrollbar {
   width: 8px;
 }
 
-.MainContainer::-webkit-scrollbar-thumb {
-  background: #34495e;
+.ChatContainer::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Dark track */
+}
+
+.ChatContainer::-webkit-scrollbar-thumb {
+  background: #4b0082; /* Purple scrollbar */
   border-radius: 4px;
 }
 
-.MainContainer::-webkit-scrollbar-thumb:hover {
-  background: #5c5c5c;
+.ChatContainer::-webkit-scrollbar-thumb:hover {
+  background: #6a0dad; /* Lighter purple on hover */
 }
 
 /* Buttons */
 .AuthButton {
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 4px;
-  background-color: #0066cc;
+  border-radius: 8px;
+  background-color: #6a0dad; /* Bright purple button */
   color: white;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: bold;
   transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0px 4px 8px rgba(106, 13, 173, 0.5); /* Purple shadow for button */
 }
 
 .AuthButton:hover {
-  background-color: #0052a3;
-  transform: scale(1.05);
+  background-color: #4b0082; /* Darker purple */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Scrollbar Styling */
+.MainContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.MainContainer::-webkit-scrollbar-thumb {
+  background: #4b0082; /* Purple scrollbar */
+  border-radius: 4px;
+}
+
+.MainContainer::-webkit-scrollbar-thumb:hover {
+  background: #6a0dad; /* Lighter purple on hover */
 }
 
 /* Responsive Design */
@@ -124,7 +159,7 @@
   }
 
   .Title {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .Logo {

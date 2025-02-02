@@ -1,18 +1,15 @@
 import { useRef, useEffect, useMemo, useState } from "react";
 import Markdown from "react-markdown";
-import { 
-  db, 
-  collection, 
-  addDoc, 
-  query, 
-  where, 
-  getDocs, 
-  orderBy, 
-  serverTimestamp 
-} from "../../firebase";  // ✅ Ensure correct import path
-
-
-
+import {
+  db,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  serverTimestamp,
+} from "../../firebase"; // ✅ Ensure correct import path
 import styles from "./Chat.module.css";
 
 const WELCOME_MESSAGE_GROUP = [
@@ -26,32 +23,32 @@ export function Chat({ messages, setMessages }) {
   const messagesEndRef = useRef(null);
   const [copiedMessage, setCopiedMessage] = useState(null);
 
+  // 🔹 Load chat history on component mount
   useEffect(() => {
     loadChatHistory();
   }, []);
 
+  // 🔹 Group messages by user and assistant responses
   const messagesGroups = useMemo(
     () =>
       messages.reduce((groups, message) => {
-        if (message.role === "user") groups.push([]);
+        if (message.role === "user") groups.push([]); // Start a new group for user messages
         groups[groups.length - 1].push(message);
         return groups;
       }, []),
     [messages]
   );
 
+  // 🔹 Scroll to the latest message when messages change
   useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
-    if (lastMessage?.role === "user") {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 🔹 Load last 7 days' messages from Firestore
+  // 🔹 Load last 7 days' chat history from Firestore
   async function loadChatHistory() {
     try {
       const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); // Convert to Firestore Timestamp
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
       const q = query(
         collection(db, "chats"),
@@ -76,19 +73,19 @@ export function Chat({ messages, setMessages }) {
     try {
       await addDoc(collection(db, "chats"), {
         ...message,
-        timestamp: serverTimestamp(), // ✅ Use Firestore serverTimestamp()
+        timestamp: serverTimestamp(),
       });
     } catch (error) {
       console.error("Error saving message:", error);
     }
   }
 
-  // 🔹 Copy message content
+  // 🔹 Copy message content to clipboard
   const copyToClipboard = async (content, messageIndex) => {
     try {
       await navigator.clipboard.writeText(content);
-      setCopiedMessage(messageIndex);
-      setTimeout(() => setCopiedMessage(null), 2000);
+      setCopiedMessage(messageIndex); // Highlight copied message
+      setTimeout(() => setCopiedMessage(null), 2000); // Reset copied state after 2 seconds
     } catch (error) {
       console.error("Failed to copy:", error);
     }
@@ -96,10 +93,22 @@ export function Chat({ messages, setMessages }) {
 
   return (
     <div className={styles.Chat}>
+      {/* Render welcome message and grouped chat messages */}
       {[WELCOME_MESSAGE_GROUP, ...messagesGroups].map((messages, groupIndex) => (
         <div key={groupIndex} className={styles.Group}>
           {messages.map(({ role, content }, index) => (
-            <div key={index} className={styles.Message} data-role={role}>
+            <div
+              key={index}
+              className={styles.Message}
+              data-role={role}
+              role="button"
+              tabIndex={0} // Makes message focusable for accessibility
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && role === "assistant") {
+                  copyToClipboard(content, `${groupIndex}-${index}`);
+                }
+              }}
+            >
               <Markdown>{content}</Markdown>
               {role === "assistant" && (
                 <button
