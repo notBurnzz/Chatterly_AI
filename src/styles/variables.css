@@ -1,0 +1,44 @@
+/* 🔹 Color Palette */
+:root {
+    --bg-gradient: radial-gradient(circle at top, #1a1a1a, #3b005f);
+    --text-color: #ffffff;
+    --accent-color: #6a0dad;
+    --accent-glow: rgba(106, 13, 173, 0.5);
+    
+    --input-bg: #222;
+    --border-color: #444;
+  
+    --scrollbar-track: #1a1a1a;
+    --scrollbar-thumb: #4b0082;
+    --scrollbar-hover: #6a0dad;
+    
+    --button-bg: #6a0dad;
+    --button-hover: #4b0082;
+  
+    --sidebar-bg: linear-gradient(180deg, #2a2a2a, #3b005f);
+    --navbar-bg: linear-gradient(to right, #3b005f, #1a1a1a);
+  }
+  
+  /* 🔹 Font Sizes */
+  :root {
+    --font-small: 14px;
+    --font-medium: 16px;
+    --font-large: 20px;
+    --font-xlarge: 24px;
+  }
+  
+  /* 🔹 Shadows & Effects */
+  :root {
+    --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
+    --button-shadow: 0px 4px 8px rgba(106, 13, 173, 0.5);
+  }
+  
+  /* 🔹 Media Queries for Mobile */
+  @media (max-width: 768px) {
+    :root {
+      --font-small: 12px;
+      --font-medium: 14px;
+      --font-large: 18px;
+    }
+  }
+  

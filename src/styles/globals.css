@@ -1,0 +1,83 @@
+/* 🔹 Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* 🔹 Body Styling */
+  body {
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  
+  /* 🔹 Scrollbar Customization */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-hover);
+  }
+  
+  /* 🔹 Button Default Styles */
+  button {
+    cursor: pointer;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* 🔹 Input Fields */
+  input, textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    background: var(--input-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  input:focus, textarea:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0px 0px 8px var(--accent-glow);
+  }
+  
+  /* 🔹 Utility Classes */
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  

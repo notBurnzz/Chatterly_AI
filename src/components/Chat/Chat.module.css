@@ -1,0 +1,114 @@
+<<<<<<< HEAD
+/* Chat Container */
+.ChatContainer {
+  flex: 1; /* Ensures the chat area fills remaining space */
+  display: flex;
+  flex-direction: column;
+  background-color: #2c3e50; /* Matches the sidebar background */
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 1rem; /* Adds padding inside the chat container */
+}
+
+.ChatContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ChatContainer::-webkit-scrollbar-track {
+  background: #34495e; /* Matches sidebar colors */
+}
+
+.ChatContainer::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 4px;
+}
+
+.ChatContainer::-webkit-scrollbar-thumb:hover {
+  background: #5c5c5c;
+}
+
+/* Individual Message Styling */
+.Message {
+  margin-bottom: 1rem; /* Spacing between messages */
+  padding: 1rem; /* Padding inside message bubbles */
+  border-radius: 8px; /* Rounded corners for messages */
+  background-color: #3b4a5a; /* Default assistant message color */
+  color: #ecf0f1; /* Light text for contrast */
+  max-width: 80%; /* Prevent messages from stretching too wide */
+  word-wrap: break-word; /* Break long words to fit inside the bubble */
+}
+
+/* User Messages */
+.Message[data-role="user"] {
+  align-self: flex-end; /* Align user messages to the right */
+  background-color: #0066cc; /* User message bubble color */
+  color: #ffffff; /* White text for contrast */
+}
+
+/* Assistant Messages */
+.Message[data-role="assistant"] {
+  align-self: flex-start; /* Align assistant messages to the left */
+  background-color: #3b4a5a; /* Assistant message bubble color */
+}
+
+/* Copy Button */
+.CopyButton {
+  background-color: transparent; /* Transparent button background */
+  color: #ecf0f1; /* Light text for contrast */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  margin-top: 0.5rem; /* Space between the button and message content */
+}
+
+.CopyButton:hover {
+  color: #3498db; /* Change color on hover for better interactivity */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Message {
+    max-width: 90%; /* Allow wider bubbles on smaller screens */
+    font-size: 0.9rem; /* Adjust font size for smaller screens */
+  }
+
+  .CopyButton {
+    font-size: 0.8rem; /* Adjust button font size */
+  }
+=======
+/* 🔹 Chat Window Styling */
+.ChatWindow {
+  flex: 1; /* Fills remaining screen space */
+  display: flex;
+  flex-direction: column;
+  background: #1a1a1a; /* Dark background for contrast */
+  overflow-y: auto; /* Enables scrolling for messages */
+  padding: 1rem;
+  color: white;
+}
+
+/* 🔹 Empty Chat Message */
+.EmptyMessage {
+  color: #999;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+/* 🔹 Scrollbar Customization */
+.ChatWindow::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ChatWindow::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Dark track */
+}
+
+.ChatWindow::-webkit-scrollbar-thumb {
+  background: #4b0082; /* Purple scrollbar */
+  border-radius: 4px;
+}
+
+.ChatWindow::-webkit-scrollbar-thumb:hover {
+  background: #6a0dad;
+>>>>>>> eabef92 (03/02-changes)
+}

@@ -1,0 +1,54 @@
+/* 🔹 Base ChatBubble Styling */
+.MessageBubble {
+    max-width: 75%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    word-wrap: break-word;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* 🔹 User Messages */
+  .UserBubble {
+    background: #0066cc; /* Blue message bubble for users */
+    color: white;
+    align-self: flex-end;
+    border-top-right-radius: 0px;
+  }
+  
+  /* 🔹 AI Messages */
+  .AIBubble {
+    background: #3b4a5a; /* Dark gray for AI messages */
+    color: #ecf0f1;
+    align-self: flex-start;
+    border-top-left-radius: 0px;
+    position: relative;
+  }
+  
+  /* 🔹 AI Message Copy Button */
+  .CopyButton {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: transparent;
+    color: #ccc;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .CopyButton:hover {
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  /* 🔹 Mobile Optimization */
+  @media (max-width: 600px) {
+    .MessageBubble {
+      max-width: 90%;
+    }
+  }
+  
