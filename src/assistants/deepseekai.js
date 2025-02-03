@@ -76,7 +76,7 @@ export class Assistant {
       }
     } catch (error) {
       console.error("DeepSeek AI Streaming Error:", error.message);
-      yield "Error: Unable to retrieve responseses.";
+      yield "Error: Unable to retrieve response.";
     }
   }
 }
