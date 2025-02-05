@@ -3,43 +3,36 @@ import styles from "./Navbar.module.css";
 
 export function Navbar({ selectedModel, setSelectedModel }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Toggle between light and dark mode
+  // 🔹 Toggle between light and dark mode
   const toggleTheme = () => {
-    setIsDarkMode((prevMode) => !prevMode);
+    setIsDarkMode((prevMode) => {
+      const newTheme = !prevMode;
+      document.body.classList.toggle("dark-mode", newTheme);
+      localStorage.setItem("theme", newTheme ? "dark" : "light");
+      return newTheme;
+    });
   };
 
-  // Close dropdown if clicked outside
+  // 🔹 Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsFeaturesOpen(false);
+        setIsDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Sync theme with localStorage
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add("dark-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.remove("dark-mode");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDarkMode]);
-
-  // Load theme from localStorage on component mount
+  // 🔹 Load theme from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       setIsDarkMode(true);
+      document.body.classList.add("dark-mode");
     }
   }, []);
 
@@ -56,7 +49,7 @@ export function Navbar({ selectedModel, setSelectedModel }) {
           <h2 className={styles.Title}>Chatterly AI</h2>
         </div>
 
-        {/* Right Section: Model Selection + Features */}
+        {/* Right Section: Model Selector + Features */}
         <div className={styles.RightSection}>
           {/* AI Model Selector */}
           <select
@@ -74,20 +67,23 @@ export function Navbar({ selectedModel, setSelectedModel }) {
           <div className={styles.FeaturesDropdown} ref={dropdownRef}>
             <button
               className={styles.FeaturesButton}
-              onClick={() => setIsFeaturesOpen((prev) => !prev)}
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              aria-expanded={isDropdownOpen}
+              aria-label="Toggle Features"
             >
               Features
             </button>
-            {isFeaturesOpen && (
+
+            {isDropdownOpen && (
               <ul className={styles.FeaturesList}>
                 <li onClick={toggleTheme}>
                   {isDarkMode ? "Light Mode" : "Dark Mode"}
                 </li>
-                <li onClick={() => alert("Feature 1 clicked!")}>
-                  Other Feature 1
+                <li onClick={() => alert("Feature 1 activated!")}>
+                  Feature 1
                 </li>
-                <li onClick={() => alert("Feature 2 clicked!")}>
-                  Other Feature 2
+                <li onClick={() => alert("Feature 2 activated!")}>
+                  Feature 2
                 </li>
               </ul>
             )}

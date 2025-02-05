@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Sidebar.module.css";
-import { signInWithGoogle, logout, auth } from "../../firebase";
+import { signInWithGoogle, logout, auth } from "../../services/firebase";
 
 export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  // Listen for Firebase Auth state changes
+  // 🔹 Listen for Firebase Auth state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -14,10 +14,10 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
     return () => unsubscribe();
   }, [setUser]);
 
-  // Toggle sidebar expansion
-  const toggleSidebar = () => setIsExpanded((prev) => !prev);
+  // 🔹 Toggle sidebar expansion
+  const toggleSidebar = (state) => setIsExpanded(state);
 
-  // Handle Google Login
+  // 🔹 Handle Google Login
   const handleLogin = async () => {
     try {
       const loggedInUser = await signInWithGoogle();
@@ -27,7 +27,7 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
     }
   };
 
-  // Handle Google Logout
+  // 🔹 Handle Google Logout
   const handleLogout = async () => {
     try {
       await logout();
@@ -39,12 +39,10 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
   };
 
   return (
-    <div
-      className={`${styles.Sidebar} ${
-        isExpanded ? styles.Expanded : styles.Collapsed
-      }`}
-      onMouseEnter={toggleSidebar}
-      onMouseLeave={toggleSidebar}
+    <aside
+      className={`${styles.Sidebar} ${isExpanded ? styles.Expanded : styles.Collapsed}`}
+      onMouseEnter={() => toggleSidebar(true)}
+      onMouseLeave={() => toggleSidebar(false)}
     >
       {/* 🔹 Chat History Section */}
       <div className={styles.TopSection}>
@@ -74,8 +72,7 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
         {user ? (
           <div
             className={styles.UserInfo}
-            onMouseEnter={() => setIsDropdownVisible(true)}
-            onMouseLeave={() => setIsDropdownVisible(false)}
+            onClick={() => setIsDropdownVisible((prev) => !prev)}
           >
             <img
               className={styles.UserAvatar}
@@ -87,10 +84,7 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
             {/* Dropdown for Logout */}
             {isDropdownVisible && (
               <div className={styles.Dropdown}>
-                <button
-                  className={styles.DropdownButton}
-                  onClick={handleLogout}
-                >
+                <button className={styles.DropdownButton} onClick={handleLogout}>
                   Logout
                 </button>
               </div>
@@ -102,6 +96,6 @@ export function Sidebar({ messages = [], setMessages = () => {}, user, setUser }
           </button>
         )}
       </div>
-    </div>
+    </aside>
   );
 }

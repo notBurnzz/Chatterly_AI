@@ -1,25 +1,19 @@
 import { useState, useEffect } from "react";
 import { Assistant as OpenAIAssistant } from "./assistants/openai";
 import { Assistant as GoogleAIAssistant } from "./assistants/googleai";
-import { Assistant as DeepSeekAIAssistant } from "./assistants/deepseekai";
+import { NvidiaDeepseekAssistant as DeepSeekAIAssistant } from "./assistants/nvidiadeepseekai";
 
-import {
-  db,
-  auth,
-  signInWithGoogle,
-  logout,
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-} from "./firebase";
-
+import { db, auth, collection, addDoc, query, where, getDocs } from "./services/firebase";
 import { Loader } from "./components/Loader/Loader";
 import { Chat } from "./components/Chat/Chat";
 import { Controls } from "./components/Controls/Controls";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Navbar } from "./components/Navbar/Navbar";
+import { Login } from "./pages/home/Login";
+
+import { fetchAIResponse } from "./utils/api";
+import { formatTimestamp } from "./utils/formatters";
+import { isNotEmpty } from "./utils/validators";
 
 import styles from "./App.module.css";
 
@@ -30,14 +24,14 @@ function App() {
   const [selectedModel, setSelectedModel] = useState("googleai");
   const [user, setUser] = useState(null);
 
-  // Initialize assistants
+  // AI Assistants initialization
   const assistants = {
     openai: new OpenAIAssistant(),
     googleai: new GoogleAIAssistant(),
     deepseekai: new DeepSeekAIAssistant(),
   };
 
-  // Listen for auth changes and load chat history
+  // Listen for authentication changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -47,10 +41,11 @@ function App() {
         setMessages([]);
       }
     });
+
     return () => unsubscribe();
   }, [selectedModel]);
 
-  // Load chat history from Firebase
+  // Load chat history
   const loadChatHistory = async (userId, model) => {
     try {
       const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -64,6 +59,7 @@ function App() {
       const chats = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
+        timestamp: formatTimestamp(doc.data().timestamp),
       }));
       setMessages(chats);
     } catch (error) {
@@ -71,9 +67,9 @@ function App() {
     }
   };
 
-  // Save a message to Firebase
+  // Save messages to Firebase
   const saveMessageToFirebase = async (message) => {
-    if (!user) return;
+    if (!user || !isNotEmpty(message.content)) return;
     try {
       await addDoc(collection(db, "chats"), {
         ...message,
@@ -86,8 +82,10 @@ function App() {
     }
   };
 
-  // Handle user message sending
+  // Handle message sending
   const handleContentSend = async (content) => {
+    if (!isNotEmpty(content)) return;
+
     const userMessage = { content, role: "user", model: selectedModel };
     setMessages((prev) => [...prev, userMessage]);
 
@@ -99,17 +97,13 @@ function App() {
     setIsStreaming(true);
 
     try {
-      const result = await assistants[selectedModel].chatStream(content, messages);
-      let aiMessage = { content: "", role: "assistant", model: selectedModel };
-      let isFirstChunk = false;
+      const result = await fetchAIResponse(selectedModel, [
+        ...messages,
+        { role: "user", content },
+      ]);
 
-      for await (const chunk of result) {
-        if (!isFirstChunk) {
-          isFirstChunk = true;
-          setMessages((prev) => [...prev, aiMessage]);
-        }
-        aiMessage.content += chunk;
-      }
+      const aiMessage = { content: result, role: "assistant", model: selectedModel };
+      setMessages((prev) => [...prev, aiMessage]);
 
       if (user) {
         await saveMessageToFirebase(aiMessage);
@@ -122,34 +116,32 @@ function App() {
     }
   };
 
+  // Render Login screen for unauthenticated users
+  if (!user) {
+    return (
+      <div className={styles.App}>
+        <Login user={user} setUser={setUser} />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.App}>
       {isLoading && <Loader />}
 
       {/* Navbar */}
-      <Navbar
-        selectedModel={selectedModel}
-        setSelectedModel={setSelectedModel}
-      />
+      <Navbar selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
 
-      {/* Main container (Sidebar + Chat) */}
+      {/* Main layout */}
       <div className={styles.MainContainer}>
-        <Sidebar
-          messages={messages}
-          setMessages={setMessages}
-          user={user}
-          setUser={setUser}
-        />
+        <Sidebar messages={messages} setMessages={setMessages} user={user} setUser={setUser} />
         <div className={styles.ChatContainer}>
           <Chat messages={messages} setMessages={setMessages} />
         </div>
       </div>
 
       {/* Input Controls */}
-      <Controls
-        isDisabled={isLoading || isStreaming}
-        onSend={handleContentSend}
-      />
+      <Controls isDisabled={isLoading || isStreaming} onSend={handleContentSend} />
     </div>
   );
 }

@@ -1,25 +1,87 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* 🔹 Import Global Variables */
+@import "./styles/variables.css";
 
-  color-scheme: light dark;
-  color: light-dark(#0d0d0d, #ececec);
-  background: light-dark(#f3f3f3, #171717);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* 🔹 Universal Reset */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
+/* 🔹 Root Theme Variables */
 body {
+  background-color: var(--background-main);
+  color: var(--text-primary);
+  font-size: var(--font-size);
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* 🔹 Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: var(--border-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2980b9;
+}
+
+/* 🔹 Global Button Styling */
+button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+/* 🔹 Inputs & Textareas */
+input,
+textarea {
   width: 100%;
-  max-width: 640px;
-  min-height: 100vh;
-  margin: 0 auto;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--secondary-color);
+  background: var(--background-light);
+  color: var(--text-primary);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* 🔹 Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--background-dark);
+    color: var(--text-primary);
+  }
+}
+
+/* 🔹 Responsive Design */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  button {
+    padding: 8px 14px;
+  }
 }

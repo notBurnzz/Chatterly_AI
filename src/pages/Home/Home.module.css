@@ -1,0 +1,52 @@
+/* Home Page Container */
+.Home {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #1e272e;
+    color: white;
+  }
+  
+  /* Main Layout (Sidebar + Chat) */
+  .MainContainer {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 70px); /* Full height minus Navbar */
+    overflow: hidden;
+  }
+  
+  /* Chat Section */
+  .ChatContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #2c3e50;
+    overflow-y: auto;
+  }
+  
+  /* Login Prompt */
+  .LoginPrompt {
+    text-align: center;
+  }
+  
+  .LoginPrompt h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .LoginButton {
+    background: #3498db;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .LoginButton:hover {
+    background: #217dbb;
+  }
+  

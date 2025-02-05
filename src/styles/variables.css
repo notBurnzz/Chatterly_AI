@@ -1,0 +1,37 @@
+/* 🔹 Global Theme Variables */
+:root {
+    /* ✅ Primary Colors */
+    --primary-color: #3498db; /* Blue Theme */
+    --secondary-color: #2c3e50; /* Dark Sidebar Background */
+    --accent-color: #e74c3c; /* Red Accent */
+  
+    /* ✅ Text Colors */
+    --text-primary: #ecf0f1; /* Main Text */
+    --text-secondary: #bdc3c7; /* Secondary Text */
+    --text-dark: #2c3e50; /* Darker Text */
+  
+    /* ✅ Background Colors */
+    --background-main: #1e272e; /* Main Background */
+    --background-light: #34495e; /* Lighter Background */
+    --background-dark: #121212; /* Dark Mode Background */
+  
+    /* ✅ Borders */
+    --border-color: rgba(255, 255, 255, 0.2);
+    --border-radius: 8px;
+  
+    /* ✅ Font Settings */
+    --font-main: "Inter", sans-serif;
+    --font-size: 16px;
+  }
+  
+  /* 🔹 Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-main: #121212;
+      --background-light: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #aaaaaa;
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
