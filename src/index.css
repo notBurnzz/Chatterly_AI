@@ -14,6 +14,7 @@ body {
   background-color: var(--background-main);
   color: var(--text-primary);
   font-size: var(--font-size);
+  line-height: 1.6;
   transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
@@ -43,11 +44,24 @@ button {
   padding: 10px 16px;
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
 button:hover {
   background: #2980b9;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* 🔹 Disabled Button */
+button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* 🔹 Inputs & Textareas */
@@ -56,9 +70,11 @@ textarea {
   width: 100%;
   padding: 10px;
   border-radius: var(--border-radius);
-  border: 1px solid var(--secondary-color);
+  border: 1px solid var(--border-color);
   background: var(--background-light);
   color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color 0.3s ease-in-out;
 }
 
 input:focus,
@@ -67,12 +83,40 @@ textarea:focus {
   outline: none;
 }
 
+/* 🔹 Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+  color: #1b75bc;
+}
+
+/* 🔹 Alerts */
+.alert {
+  padding: 10px 16px;
+  border-radius: var(--border-radius);
+  margin: 10px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-error {
+  background: var(--error-color);
+  color: white;
+}
+
+.alert-success {
+  background: var(--success-color);
+  color: white;
+}
+
 /* 🔹 Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--background-dark);
-    color: var(--text-primary);
-  }
+.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-primary);
 }
 
 /* 🔹 Responsive Design */
@@ -83,5 +127,9 @@ textarea:focus {
 
   button {
     padding: 8px 14px;
+  }
+
+  .alert {
+    font-size: 14px;
   }
 }

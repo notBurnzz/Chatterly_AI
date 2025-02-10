@@ -6,21 +6,23 @@ import { Chat } from "../../components/Chat/Chat";
 import { Loader } from "../../components/Loader/Loader";
 import { useAuth } from "../../contexts/AuthContext";
 import { useChat } from "../../contexts/ChatContext";
+import { useTheme } from "../../contexts/ThemeContext"; // ✅ Import ThemeContext
 
 export function Home() {
-  const { user, login } = useAuth(); // Authentication state
-  const { loading, messages, setMessages, selectedModel, setSelectedModel } = useChat(); // Chat state
+  const { user, login } = useAuth(); // 🔹 Authentication state
+  const { loading, messages, setMessages, selectedModel, setSelectedModel } = useChat(); // 🔹 Chat state
+  const { isDarkMode } = useTheme(); // 🔹 Dark mode state
 
   return (
-    <div className={styles.Home}>
-      {/* Navbar (Model Selection + Features) */}
+    <div className={`${styles.Home} ${isDarkMode ? styles.DarkMode : ""}`}>
+      {/* ✅ Navbar (Model Selection + Features) */}
       <Navbar selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
 
       <div className={styles.MainContainer}>
-        {/* Sidebar (Chat History & User Profile) */}
+        {/* ✅ Sidebar (Chat History & User Profile) */}
         <Sidebar messages={messages} setMessages={setMessages} user={user} />
 
-        {/* Chat Interface */}
+        {/* ✅ Chat Interface */}
         <div className={styles.ChatContainer}>
           {loading ? (
             <Loader />

@@ -1,70 +1,63 @@
-/**
- * 🔹 Format timestamp into a readable date/time string
- * @param {number} timestamp - Timestamp in milliseconds
- * @returns {string} - Formatted date string (e.g., "Jan 1, 2024 - 10:30 AM")
- */
-export function formatTimestamp(timestamp) {
-    if (!timestamp || isNaN(timestamp)) return "N/A";
-    return new Date(timestamp).toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
-  
-  /**
-   * 🔹 Shorten long text while maintaining readability
-   * @param {string} text - Input text
-   * @param {number} maxLength - Max character length (default: 100)
-   * @returns {string} - Shortened text with ellipsis if needed
-   */
-  export function truncateText(text, maxLength = 100) {
-    if (typeof text !== "string") return "";
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-  }
-  
-  /**
-   * 🔹 Format AI API response to extract clean text
-   * @param {object} response - AI response object
-   * @param {string} model - The AI model used (e.g., "openai", "googleai", "nvidia", "qwenai")
-   * @returns {string} - Extracted message text
-   */
-  export function formatAIResponse(response, model) {
-    if (!response || typeof response !== "object") return "No response received.";
-  
-    switch (model) {
-      case "openai":
-      case "nvidia":
-      case "qwenai":
-        return response.choices?.[0]?.message?.content ?? "AI response unavailable.";
-  
-      case "googleai":
-        return response.candidates?.[0]?.content?.parts?.[0]?.text ?? "AI response unavailable.";
-  
-      default:
-        return "Invalid AI model selected.";
-    }
-  }
-  
-  /**
-   * 🔹 Capitalize the first letter of a string
-   * @param {string} text - Input text
-   * @returns {string} - Text with the first letter capitalized
-   */
-  export function capitalizeFirstLetter(text) {
-    if (typeof text !== "string" || text.length === 0) return "";
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  }
-  
-  /**
-   * 🔹 Sanitize user input to prevent XSS attacks
-   * @param {string} input - User input
-   * @returns {string} - Sanitized input
-   */
-  export function sanitizeInput(input) {
-    if (typeof input !== "string") return "";
-    return input.replace(/[<>]/g, "");
-  }
-  
+// ✅ API Keys (Stored in `.env.local`)
+export const API_KEYS = {
+  OPENAI: import.meta.env.VITE_OPEN_AI_API_KEY,
+  GOOGLE_AI: import.meta.env.VITE_GOOGLE_AI_API_KEY,
+  NVIDIA_DEEPSEEK: import.meta.env.VITE_NVIDIA_DEEPSEEK_API_KEY,
+  QWEN_AI: import.meta.env.VITE_QWEN_AI_API_KEY,
+};
+
+// ✅ API Endpoints
+export const API_ENDPOINTS = {
+  openai: "https://api.openai.com/v1/chat/completions",
+  googleai: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent",
+  nvidia: "https://integrate.api.nvidia.com/v1/chat/completions",
+  qwenai: "https://api.qwen.aliyun.com/v1/chat/completions",
+};
+
+// ✅ AI Model Configurations
+export const AI_MODELS = {
+  openai: { model: "gpt-4o-mini", temperature: 0.7 },
+  googleai: { model: "gemini-1.5-flash", temperature: 0.7 },
+  nvidia: { model: "deepseek-ai/deepseek-r1", temperature: 0.7 },
+  qwenai: { model: "qwen-turbo", temperature: 0.7 },
+};
+
+// ✅ Default Chat Settings
+export const CHAT_SETTINGS = {
+  MAX_HISTORY_LENGTH: 10, // Maximum number of past messages stored
+  RESPONSE_TIMEOUT: 10000, // Timeout for AI responses in milliseconds
+  DEFAULT_MODEL: "googleai", // Default AI model on app startup
+};
+
+// ✅ UI Text Constants
+export const UI_TEXT = {
+  APP_TITLE: "Chatterly AI",
+  WELCOME_MESSAGE: "Your friendly AI companion, ready to assist 24/7. What’s on your mind?",
+  ERROR_MESSAGE: "🚨 Oops! Something went wrong. Please try again.",
+  LOADING_MESSAGE: "⏳ Thinking...",
+};
+
+// ✅ Sidebar Configuration
+export const SIDEBAR_SETTINGS = {
+  WIDTH_COLLAPSED: "80px",
+  WIDTH_EXPANDED: "300px",
+};
+
+// ✅ Global Theme Variables
+export const THEME_COLORS = {
+  PRIMARY: "#3498db",
+  SECONDARY: "#2c3e50",
+  ACCENT: "#e74c3c",
+  BACKGROUND: "#1e272e",
+  TEXT_PRIMARY: "#ecf0f1",
+  TEXT_SECONDARY: "#bdc3c7",
+  ERROR: "#e74c3c",
+  SUCCESS: "#2ecc71",
+};
+
+// ✅ Dark Mode Settings
+export const DARK_MODE_SETTINGS = {
+  BACKGROUND: "#121212",
+  TEXT: "#ffffff",
+  BORDER: "rgba(255, 255, 255, 0.1)",
+};

@@ -1,4 +1,4 @@
-/* Navbar Container */
+/* 🔹 Navbar Container */
 .Navbar {
   position: fixed;
   top: 0;
@@ -16,7 +16,7 @@
   transition: background 0.3s ease-in-out;
 }
 
-/* Navbar Content */
+/* 🔹 Navbar Content */
 .NavbarContent {
   width: 100%;
   display: flex;
@@ -24,7 +24,7 @@
   align-items: center;
 }
 
-/* Left Section (Logo + Title) */
+/* 🔹 Left Section (Logo + Title) */
 .LeftSection {
   display: flex;
   align-items: center;
@@ -52,14 +52,26 @@
   transition: color 0.3s ease-in-out;
 }
 
-/* Right Section (Dropdown and Features) */
+/* 🔹 Right Section (Model Selector + Features) */
 .RightSection {
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
-/* Model Selector */
+/* 🔹 AI Model Selector */
+.ModelSelector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ModelLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
 .ModelSelect {
   padding: 10px 14px;
   font-size: 14px;
@@ -78,7 +90,7 @@
   border-color: rgba(255, 255, 255, 0.8);
 }
 
-/* Features Dropdown */
+/* 🔹 Features Dropdown */
 .FeaturesDropdown {
   position: relative;
 }
@@ -99,7 +111,7 @@
   border-color: rgba(255, 255, 255, 0.8);
 }
 
-/* Dropdown Menu */
+/* 🔹 Dropdown Menu */
 .FeaturesList {
   position: absolute;
   top: calc(100% + 8px);
@@ -115,19 +127,20 @@
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
+  transform: scaleY(0);
+  transform-origin: top;
   transition: opacity 0.3s ease, transform 0.3s ease-in-out;
 }
 
-/* Show dropdown on hover */
+/* 🔹 Show dropdown on hover */
 .FeaturesDropdown:hover .FeaturesList,
 .FeaturesDropdown:focus-within .FeaturesList {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: scaleY(1);
 }
 
-/* Dropdown List Items */
+/* 🔹 Dropdown List Items */
 .FeaturesList li {
   padding: 12px 16px;
   font-size: 14px;
@@ -141,7 +154,7 @@
   color: #ecf0f1;
 }
 
-/* Scrollbar Styling (For Dropdown) */
+/* 🔹 Scrollbar Styling (For Dropdown) */
 .FeaturesList::-webkit-scrollbar {
   width: 6px;
 }
@@ -155,7 +168,7 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Dark Mode */
+/* 🔹 Dark Mode */
 body.dark-mode .Navbar {
   background-color: rgba(22, 33, 44, 0.9);
 }
@@ -171,7 +184,7 @@ body.dark-mode .FeaturesList {
   background-color: rgba(22, 33, 44, 1);
 }
 
-/* Responsive Design */
+/* 🔹 Responsive Design */
 @media (max-width: 768px) {
   .Navbar {
     height: 65px;

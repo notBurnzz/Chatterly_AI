@@ -15,7 +15,7 @@ const API_ENDPOINTS = {
 // ✅ Model Defaults
 const MODEL_DEFAULTS = {
   openai: "gpt-4o-mini",
-  googleai: "gemini-1.5-flash",
+  googleai: "gemini-2.0-flash-exp",
   nvidia: "deepseek-ai/deepseek-r1",
   qwenai: "qwen-turbo",
 };

@@ -6,12 +6,12 @@ export function Controls({ isDisabled = false, onSend }) {
   const textareaRef = useRef(null);
   const [content, setContent] = useState("");
 
-  // 🔹 Auto-focus input when not disabled
+  // 🔹 Auto-focus input only if it's empty & not disabled
   useEffect(() => {
-    if (!isDisabled) {
+    if (!isDisabled && !content) {
       textareaRef.current?.focus();
     }
-  }, [isDisabled]);
+  }, [isDisabled, content]);
 
   // 🔹 Handle input change
   function handleContentChange(event) {
@@ -26,11 +26,14 @@ export function Controls({ isDisabled = false, onSend }) {
     }
   }
 
-  // 🔹 Detect Enter key (without Shift) to send message
-  function handleEnterPress(event) {
+  // 🔹 Detect Enter & Escape key actions
+  function handleKeyDown(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       handleContentSend();
+    }
+    if (event.key === "Escape") {
+      setContent(""); // Clear input on Escape
     }
   }
 
@@ -44,9 +47,9 @@ export function Controls({ isDisabled = false, onSend }) {
           placeholder="Type your message..."
           value={content}
           minRows={1}
-          maxRows={4}
+          maxRows={6} // 🔹 Increased max rows for better multi-line input
           onChange={handleContentChange}
-          onKeyDown={handleEnterPress}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <button

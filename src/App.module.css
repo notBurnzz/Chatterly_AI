@@ -1,39 +1,41 @@
-/* General App Layout */
+/* 🔹 General App Layout */
 .App {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: radial-gradient(circle at top, #1a1a1a, #3b005f); /* Dark black to purple gradient */
+  background: radial-gradient(circle at top, #1a1a1a, #3b005f); /* Black to purple */
   color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
+  transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
 }
 
-/* Main Content Container */
+/* 🔹 Main Content Layout */
 .MainContainer {
   display: flex;
-  margin-top: 70px; /* Push content below the navbar */
-  height: calc(100vh - 70px); /* Fill remaining height after the navbar */
-  width: 100%; /* Full width */
+  margin-top: 70px;
+  height: calc(100vh - 70px);
+  width: 100%;
   overflow: hidden;
 }
 
-/* Sidebar */
+/* 🔹 Sidebar */
 .ChatSidebar {
-  width: 20%; /* Fixed sidebar width */
-  background: linear-gradient(180deg, #2a2a2a, #3b005f); /* Dark black to purple gradient */
+  width: 20%;
+  background: linear-gradient(180deg, #2a2a2a, #3b005f);
   color: white;
   overflow-y: auto;
-  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.6); /* Inner shadow for depth */
+  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.6);
+  transition: width 0.3s ease-in-out;
 }
 
 .ChatSidebar h2 {
   padding: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #e0c1ff; /* Light purple text */
-  text-shadow: 0px 0px 10px rgba(128, 0, 255, 0.5); /* Glowing text effect */
+  color: #e0c1ff;
+  text-shadow: 0px 0px 10px rgba(128, 0, 255, 0.5);
 }
 
 .ChatSidebar ul {
@@ -48,25 +50,26 @@
 }
 
 .ChatSidebar li:hover {
-  background-color: #4b0082; /* Deep purple */
-  transform: scale(1.05); /* Slight zoom effect */
+  background-color: #4b0082;
+  transform: scale(1.05);
 }
 
-/* Navbar */
+/* 🔹 Navbar */
 .Navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed; /* Fixes the navbar at the top */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 70px; /* Fixed navbar height */
-  background: linear-gradient(to right, #3b005f, #1a1a1a); /* Purple to dark black gradient */
-  z-index: 1000; /* Stays above all other elements */
+  height: 70px;
+  background: linear-gradient(to right, #3b005f, #1a1a1a);
+  z-index: 1000;
   color: white;
   padding: 0 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Shadow for separation */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  transition: background 0.3s ease-in-out;
 }
 
 .Navbar .Logo {
@@ -74,86 +77,94 @@
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
-  box-shadow: 0 0 10px #9a4dff; /* Glow effect around the logo */
+  box-shadow: 0 0 10px #9a4dff;
+  transition: transform 0.3s ease-in-out;
+}
+
+.Navbar .Logo:hover {
+  transform: scale(1.1);
 }
 
 .Navbar .Title {
   font-size: 1.8rem;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* Glowing text effect */
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
 }
 
+/* 🔹 Right Section */
 .Navbar .RightSection {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Chat Area */
+/* 🔹 Chat Area */
 .ChatContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #0d0d0d; /* Plain black for chat area */
-  overflow-y: auto; /* Enables vertical scrolling */
-  padding: 1rem; /* Inner padding for content */
-  margin-top: 70px; /* Push chat area below the navbar */
+  background: #0d0d0d;
+  overflow-y: auto;
+  padding: 1rem;
+  margin-top: 70px;
   color: #ffffff;
+  transition: background 0.3s ease-in-out;
 }
 
+/* 🔹 Scrollbar Styling */
 .ChatContainer::-webkit-scrollbar {
   width: 8px;
 }
 
 .ChatContainer::-webkit-scrollbar-track {
-  background: #1a1a1a; /* Dark track */
+  background: #1a1a1a;
 }
 
 .ChatContainer::-webkit-scrollbar-thumb {
-  background: #4b0082; /* Purple scrollbar */
+  background: #4b0082;
   border-radius: 4px;
 }
 
 .ChatContainer::-webkit-scrollbar-thumb:hover {
-  background: #6a0dad; /* Lighter purple on hover */
+  background: #6a0dad;
 }
 
-/* Buttons */
+/* 🔹 Buttons */
 .AuthButton {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 8px;
-  background-color: #6a0dad; /* Bright purple button */
+  background-color: #6a0dad;
   color: white;
   cursor: pointer;
   font-size: 1rem;
   font-weight: bold;
   transition: background-color 0.3s, transform 0.3s;
-  box-shadow: 0px 4px 8px rgba(106, 13, 173, 0.5); /* Purple shadow for button */
+  box-shadow: 0px 4px 8px rgba(106, 13, 173, 0.5);
 }
 
 .AuthButton:hover {
-  background-color: #4b0082; /* Darker purple */
-  transform: scale(1.05); /* Slight zoom effect */
+  background-color: #4b0082;
+  transform: scale(1.05);
 }
 
-/* Scrollbar Styling */
+/* 🔹 Scrollbar Styling */
 .MainContainer::-webkit-scrollbar {
   width: 8px;
 }
 
 .MainContainer::-webkit-scrollbar-thumb {
-  background: #4b0082; /* Purple scrollbar */
+  background: #4b0082;
   border-radius: 4px;
 }
 
 .MainContainer::-webkit-scrollbar-thumb:hover {
-  background: #6a0dad; /* Lighter purple on hover */
+  background: #6a0dad;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
+/* 🔹 Responsive Design */
+@media (max-width: 768px) {
   .Navbar {
     padding: 0.5rem;
   }
@@ -171,4 +182,34 @@
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
   }
+
+  .ChatSidebar {
+    width: 60px;
+  }
+}
+
+/* 🔹 Dark Mode Support */
+.dark-mode .App {
+  background: radial-gradient(circle at top, #121212, #3b005f);
+  color: #e0e0e0;
+}
+
+.dark-mode .Navbar {
+  background: linear-gradient(to right, #3b005f, #121212);
+}
+
+.dark-mode .ChatSidebar {
+  background: linear-gradient(180deg, #1a1a1a, #3b005f);
+}
+
+.dark-mode .ChatContainer {
+  background: #181818;
+}
+
+.dark-mode .AuthButton {
+  background-color: #9a4dff;
+}
+
+.dark-mode .AuthButton:hover {
+  background-color: #7a1bbf;
 }

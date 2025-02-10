@@ -1,4 +1,4 @@
-/* Sidebar Container */
+/* 🔹 Sidebar Container */
 .Sidebar {
   display: flex;
   flex-direction: column;
@@ -14,13 +14,13 @@
   overflow: hidden; /* Hide content when collapsed */
 }
 
-/* Expanded Sidebar */
+/* 🔹 Expanded Sidebar */
 .Sidebar.Expanded {
   width: 280px; /* Expanded width */
   background-color: #1e2d3b; /* Slightly darker shade */
 }
 
-/* Top Section: Chat History */
+/* 🔹 Top Section: Chat History */
 .TopSection {
   flex: 1;
   padding: 12px;
@@ -40,7 +40,7 @@
   opacity: 0.8;
 }
 
-/* Bottom Section: User Info & Authentication */
+/* 🔹 Bottom Section: User Info & Authentication */
 .BottomSection {
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-/* User Info */
+/* 🔹 User Info */
 .UserInfo {
   position: relative;
   display: flex;
@@ -67,7 +67,7 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* User Avatar */
+/* 🔹 User Avatar */
 .UserAvatar {
   width: 48px;
   height: 48px;
@@ -82,7 +82,7 @@
   border-color: #3498db;
 }
 
-/* User Email */
+/* 🔹 User Email */
 .UserEmail {
   font-size: 14px;
   color: #ecf0f1;
@@ -94,7 +94,7 @@
   max-width: 140px; /* Prevents overflow */
 }
 
-/* Dropdown Menu */
+/* 🔹 Dropdown Menu */
 .Dropdown {
   position: absolute;
   bottom: 65px; /* Position above avatar */
@@ -110,14 +110,14 @@
   transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-/* Show dropdown when active */
+/* 🔹 Show dropdown when active */
 .UserInfo:hover .Dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(-5px);
 }
 
-/* Logout Button */
+/* 🔹 Logout Button */
 .DropdownButton {
   background-color: #e74c3c;
   color: #ffffff;
@@ -132,7 +132,7 @@
   background-color: #c0392b;
 }
 
-/* Login Button */
+/* 🔹 Login Button */
 .AuthButton {
   margin-top: auto; /* Push to bottom */
   background-color: #3498db;
@@ -149,7 +149,7 @@
   background-color: #217dbb;
 }
 
-/* Sidebar Scrollbar Styling */
+/* 🔹 Sidebar Scrollbar Styling */
 .TopSection::-webkit-scrollbar {
   width: 6px;
 }
@@ -163,7 +163,7 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Responsive Sidebar */
+/* 🔹 Responsive Sidebar */
 @media (max-width: 768px) {
   .Sidebar {
     width: 70px;
@@ -179,7 +179,7 @@
   }
 }
 
-/* Dark Mode */
+/* 🔹 Dark Mode */
 body.dark-mode .Sidebar {
   background-color: rgba(20, 30, 40, 0.95);
 }

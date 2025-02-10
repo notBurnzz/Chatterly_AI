@@ -1,33 +1,34 @@
-/* Chat Controls Container */
+/* 🔹 Chat Controls Container */
 .Controls {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
   padding: 8px;
-  background: #1e272e; /* Darker background for modern UI */
+  background: var(--controls-bg, #1e272e);
   border-radius: 12px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease-in-out;
 }
 
-/* Text Input Container */
+/* 🔹 Text Input Container */
 .TextAreaContainer {
   flex-grow: 1;
   padding: 10px 16px;
   border-radius: 16px;
-  background: #2c3e50;
+  background: var(--input-bg, #2c3e50);
   display: flex;
   align-items: center;
   transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* Autofocus effect */
+/* 🔹 Autofocus Effect */
 .TextAreaContainer:focus-within {
-  background: #34495e;
+  background: var(--input-focus, #34495e);
   box-shadow: 0px 2px 5px rgba(52, 73, 94, 0.4);
 }
 
-/* Text Input */
+/* 🔹 Text Input */
 .TextArea {
   width: 100%;
   height: 100%;
@@ -35,29 +36,31 @@
   outline: none;
   resize: none;
   background: transparent;
-  color: #ecf0f1;
+  color: var(--text-color, #ecf0f1);
   font-size: 1rem;
   line-height: 1.4;
+  padding: 6px 0;
+  transition: color 0.2s ease-in-out;
 }
 
-/* Send Button */
+/* 🔹 Send Button */
 .Button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border: none;
   border-radius: 50%;
   outline: none;
-  background: #007bff;
+  background: var(--primary-color, #007bff);
   cursor: pointer;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* Hover and Active Effects */
+/* 🔹 Hover and Active Effects */
 .Button:hover {
-  background: #0056b3;
+  background: var(--primary-hover, #0056b3);
   box-shadow: 0px 3px 10px rgba(0, 123, 255, 0.3);
 }
 
@@ -65,27 +68,27 @@
   transform: scale(0.95);
 }
 
-/* Send Button Icon */
+/* 🔹 Send Button Icon */
 .Button svg {
-  fill: #ffffff;
+  fill: var(--button-icon, #ffffff);
   transition: fill 0.2s ease-in-out;
 }
 
-/* Disabled States */
+/* 🔹 Disabled States */
 .TextArea:disabled,
 .Button:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 
-/* Responsive Design */
+/* 🔹 Responsive Design */
 @media (max-width: 768px) {
   .TextArea {
     font-size: 0.9rem;
   }
 
   .Button {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 }

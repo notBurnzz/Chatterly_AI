@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import { Assistant as OpenAIAssistant } from "./assistants/openai";
-import { Assistant as GoogleAIAssistant } from "./assistants/googleai";
-import { NvidiaDeepseekAssistant as DeepSeekAIAssistant } from "./assistants/nvidiadeepseekai";
-
+import { getModel } from "./assistants/ModelFactory";
 import { db, auth, collection, addDoc, query, where, getDocs } from "./services/firebase";
 import { Loader } from "./components/Loader/Loader";
 import { Chat } from "./components/Chat/Chat";
@@ -23,15 +20,20 @@ function App() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [selectedModel, setSelectedModel] = useState("googleai");
   const [user, setUser] = useState(null);
+  const [aiModel, setAiModel] = useState(null);
 
-  // AI Assistants initialization
-  const assistants = {
-    openai: new OpenAIAssistant(),
-    googleai: new GoogleAIAssistant(),
-    deepseekai: new DeepSeekAIAssistant(),
-  };
+  // ✅ Load AI Model when `selectedModel` changes
+  useEffect(() => {
+    try {
+      const modelInstance = getModel(selectedModel);
+      setAiModel(modelInstance);
+    } catch (error) {
+      console.error("AI Model Initialization Error:", error.message);
+      setAiModel(null);
+    }
+  }, [selectedModel]);
 
-  // Listen for authentication changes
+  // ✅ Listen for authentication changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
@@ -45,7 +47,7 @@ function App() {
     return () => unsubscribe();
   }, [selectedModel]);
 
-  // Load chat history
+  // ✅ Load chat history
   const loadChatHistory = async (userId, model) => {
     try {
       const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -67,7 +69,7 @@ function App() {
     }
   };
 
-  // Save messages to Firebase
+  // ✅ Save messages to Firebase
   const saveMessageToFirebase = async (message) => {
     if (!user || !isNotEmpty(message.content)) return;
     try {
@@ -82,7 +84,7 @@ function App() {
     }
   };
 
-  // Handle message sending
+  // ✅ Handle message sending
   const handleContentSend = async (content) => {
     if (!isNotEmpty(content)) return;
 
@@ -97,11 +99,11 @@ function App() {
     setIsStreaming(true);
 
     try {
-      const result = await fetchAIResponse(selectedModel, [
-        ...messages,
-        { role: "user", content },
-      ]);
+      if (!aiModel) {
+        throw new Error("AI model not initialized.");
+      }
 
+      const result = await aiModel.sendMessage(content);
       const aiMessage = { content: result, role: "assistant", model: selectedModel };
       setMessages((prev) => [...prev, aiMessage]);
 
@@ -116,7 +118,7 @@ function App() {
     }
   };
 
-  // Render Login screen for unauthenticated users
+  // ✅ Render Login screen for unauthenticated users
   if (!user) {
     return (
       <div className={styles.App}>

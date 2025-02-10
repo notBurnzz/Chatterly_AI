@@ -6,41 +6,56 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // 🔹 Track authentication errors
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
+    const unsubscribe = auth.onAuthStateChanged(
+      (currentUser) => {
+        setUser(currentUser);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Auth state change error:", error);
+        setError(error.message);
+        setLoading(false);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
 
   const login = async () => {
     try {
-      const user = await signInWithGoogle();
-      setUser(user);
-    } catch (error) {
-      console.error("Login error:", error);
-      throw error;
+      setLoading(true);
+      const loggedInUser = await signInWithGoogle();
+      setUser(loggedInUser);
+    } catch (err) {
+      console.error("Login error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const logoutUser = async () => {
     try {
+      setLoading(true);
       await logout();
       setUser(null);
-    } catch (error) {
-      console.error("Logout error:", error);
-      throw error;
+    } catch (err) {
+      console.error("Logout error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const value = {
     user,
     loading,
+    error,
     login,
-    logoutUser
+    logoutUser,
   };
 
   return (

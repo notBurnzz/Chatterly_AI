@@ -6,16 +6,19 @@ import {
   query, 
   where, 
   getDocs, 
-  orderBy,
-  serverTimestamp
+  orderBy, 
+  serverTimestamp, 
+  onSnapshot
 } from "firebase/firestore";
 import { 
   getAuth, 
   GoogleAuthProvider,
   signInWithPopup, 
-  signOut 
+  signOut,
+  onAuthStateChanged
 } from "firebase/auth";
 
+// 🔹 Firebase Configuration (Using Environment Variables)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -26,12 +29,16 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+// 🔹 Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Added Google sign-in function
+/**
+ * 🔹 Google Sign-In
+ * @returns {Promise<User>} - Authenticated user object.
+ */
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
@@ -42,7 +49,10 @@ export const signInWithGoogle = async () => {
   }
 };
 
-// Added logout function
+/**
+ * 🔹 Logout User
+ * @returns {Promise<boolean>} - Returns true if logout is successful.
+ */
 export const logout = async () => {
   try {
     await signOut(auth);
@@ -53,6 +63,15 @@ export const logout = async () => {
   }
 };
 
+/**
+ * 🔹 Listen for Authentication Changes
+ * @param {Function} callback - Function to handle user state.
+ * @returns {Function} - Unsubscribe function.
+ */
+export const onAuthStateChangedListener = (callback) => {
+  return onAuthStateChanged(auth, callback);
+};
+
 export { 
   app, 
   db,  
@@ -60,11 +79,13 @@ export {
   googleProvider,
   signInWithPopup,
   signOut,
+  onAuthStateChanged,
   collection, 
   addDoc, 
   query, 
   where, 
   getDocs,
   orderBy,
-  serverTimestamp
+  serverTimestamp,
+  onSnapshot
 };
